@@ -1,7 +1,7 @@
 # Script Name: SVP_AF Route Monitor | Version: 13.5
 # SKRIPTA JE NAPRAVLJENA DA SE NE ŠALJU PODACI AKO JE "SVP_AF" DOWN
 # jer klasicni check-gateway se ne može koristiti, mangle RETURN traffic može pomoci ali ne za postojece konekcije
-#:log info "SCRIPT(ping_distance) USPJEH";
+:log info "SCRIPT(ping_distance) USPJEH";
 
 # Provjeri postoji li globalna varijabla failedPings, ako ne, postavi ju na 0
 :if ([:typeof $failedPings] = "nothing") do={
@@ -23,7 +23,7 @@
         :if ($routeDistance != 3) do={ # Postavi udaljenost rute na 3
             :log info "SCRIPT(ping_distance) SVP NOT available, SET distance=3 for SVP_AF";
             /ip route set [find comment~"SVP_AF"] distance=3;
-            /tool e-mail send body="$ip" subject="SVP - DOWN! from ROB_CCR" to="info@tehnicore.hr";
+            /tool e-mail send body="$ip" subject="SVP - DOWN! from ROB_CCR" to="info@xx.hr";
         }
     }
 } else={ # Ako je ping uspješan
@@ -31,6 +31,6 @@
     :if ($routeDistance != 1) do={ # Postavi udaljenost rute na 1
         :log info "SCRIPT(ping_distance) SVP available, SET distance=1 for SVP_AF";
         /ip route set [find comment~"SVP_AF"] distance=1;
-        /tool e-mail send body="$ip" subject="SVP - UP! from ROB_CCR" to="info@tehnicore.hr";
+        /tool e-mail send body="$ip" subject="SVP - UP! from ROB_CCR" to="info@xx.hr";
     }
 }
